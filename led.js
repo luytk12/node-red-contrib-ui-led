@@ -75,7 +75,7 @@ module.exports = function(RED) {
 
 					var ptr = document.getElementById("led_" + $scope.$eval('$id'));
 					$(ptr).attr('style', ledStyleTemplate(
-						value ? config.ColorOn : config.ColorOff
+						value ? config.coloron : config.coloroff
 						)
 					);
 	            };
