@@ -55,10 +55,22 @@ module.exports = function(RED) {
 
 			var node = this;
 
+		console.log(config.coloron);
+		console.log(config.coloroff);
+
             var beforeEmit = function(msg, value) {
-                return { msg: msg };
+		var newmsg = {
+			payload : {
+			      active: msg.payload,
+			      coloron: config.coloron,
+		      		coloroff: config.coloroff
+				}
+		};
+                return { msg: newmsg };
             };
 
+	
+            
             var initController = ($scope) => {
             	$scope.flag = true;         
 
@@ -66,17 +78,14 @@ module.exports = function(RED) {
 	            	if (!msg) {
 	            		return;
 	            	}
-
-	            	var value = msg.payload === true;
+				
+			        	var value = msg.payload.active === true;
 
 					var ledStyleTemplate = (color) => {
 						return `background-color: ` + color + `; box-shadow: inset #ffffff8c 0px 1px 2px, inset #00000033 0 -1px 1px 1px, inset ` + color + ` 0 -1px 4px, ` + color + ` 0 0px 16px, ` + color + ` 0 0px 16px;`
 					};
-
 					var ptr = document.getElementById("led_" + $scope.$eval('$id'));
-					$(ptr).attr('style', ledStyleTemplate(
-						value ? config.coloron : config.coloroff
-						)
+					$(ptr).attr('style', ledStyleTemplate(value ? msg.payload.coloron : msg.payload.coloroff)
 					);
 	            };
                 $scope.$watch('msg', update);
@@ -89,7 +98,7 @@ module.exports = function(RED) {
 			if (checkConfig(config, node)) {
 	            var done = ui.addWidget({                   
 	                node: node,    
-	                format: HTML(config, ledStyleTemplate('gray')), 
+	                format: HTML(config, ledStyleTemplate(config.coloroff)), 
 	                group: config.group,  
 	                templateScope: "local",
 	                order: 0,
