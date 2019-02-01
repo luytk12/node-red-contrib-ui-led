@@ -12,8 +12,8 @@ module.exports = function(RED) {
 			        height: 100%;
 				}
 				span.led {
-				    width: 24px;
-				    height: 24px;
+				    width: 20px;
+				    height: 20px;
 				    border-radius: 50%;
 				    margin: 8px;
 				}
@@ -82,7 +82,7 @@ module.exports = function(RED) {
 			        	var value = msg.payload.active === true;
 
 					var ledStyleTemplate = (color) => {
-						return `background-color: ` + color + `; box-shadow: inset #ffffff8c 0px 1px 2px, inset #00000033 0 -1px 1px 1px, inset ` + color + ` 0 -1px 4px, ` + color + ` 0 0px 16px, ` + color + ` 0 0px 16px;`
+						return `background-color: ` + color + `; box-shadow: inset #ffffff8c 0px 1px 2px, inset #00000033 0 -1px 1px 1px, inset ` + color + ` 0 -1px 4px, ` + color + ` 0 0px 10px, ` + color + ` 0 0px 10px;`
 					};
 					var ptr = document.getElementById("led_" + $scope.$eval('$id'));
 					$(ptr).attr('style', ledStyleTemplate(value ? msg.payload.coloron : msg.payload.coloroff)
